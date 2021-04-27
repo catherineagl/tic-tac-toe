@@ -9,7 +9,6 @@
     <title>Tic Tac Toe Game</title>
 </head>
 <body>
-    <div id="result" class="result"></div>
     <div class="container" id="container">
         <div class="screen-board" id="screen-board">
             <div class="player"><span class="name" id="player1">Player 1</span>:<span class="point" id="player-one-points">0</span></div>
@@ -30,19 +29,21 @@
     </div>
     <div class="modal" id="modal">
         <div class="show-modal">
+            <h1>Welcome to Tic Tac Toe!</h1>
             <form class="player-names" autocomplete="off">
-                <label for="player-one-name">Player 1 name:</label>
-                <input type="text" id="player-one-name" name="player-one-name">
+                <label for="player-one-name">Player 1:</label>
+                <input type="text" id="player-one-name" name="player-one-name" maxlength="10" placeholder="Enter name...">
             </form>
             <form class="player-names" autocomplete="off">
-                <label for="player-one-name">Player 2 name:</label>
-                <input type="text" id="player-two-name" name="player-two-name">
+                <label for="player-one-name">Player 2:</label>
+                <input type="text" id="player-two-name" name="player-two-name" maxlength="10" placeholder="Enter name...">
             </form>
             <button class="btn hidden-btn" id="new-game-btn">Start New Game</button>
         </div>
     </div>
-
+    
     <div class="modal-btn" id="modal-btn">
+        <div id="result" class="result"></div>
         <button id="play-again-btn" class="btn play-again-btn">Play Again?</button>
     </div>
 </body>

@@ -67,24 +67,25 @@ const checkWinner = (mark) => {
 
     let boardFull = boardItems.filter(item => item)
     if(boardFull.length === 9 && !winner) {
-    const modalBtn = document.getElementById('modal-btn');
+        const modalBtn = document.getElementById('modal-btn');
+        showResult("It is a tie. Nobody wins")
         modalBtn.classList.toggle('active')
     }
 }
 
 const showWinner = (mark) => {
-    const result = document.getElementById('result');
     const playerOne = document.getElementById('player-one-points');
     const playerTwo = document.getElementById('player-two-points');
     const modalBtn = document.getElementById('modal-btn');
+    
     if(mark === "X") {
-        result.textContent = `${mark} is the winner`;
+        showResult(`${document.getElementById('player1').textContent}(${mark}) is the winner`);
         playerOnePoints++;
         playerOne.textContent = playerOnePoints;
         modalBtn.classList.toggle('active')
     }
     if(mark === "O") {
-        result.textContent = `${mark} is the winner`;
+        showResult(`${document.getElementById('player2').textContent}(${mark}) is the winner`);
         playerTwoPoints++;
         playerTwo.textContent = playerTwoPoints;
         modalBtn.classList.toggle('active')
@@ -106,7 +107,11 @@ const setNewGame = () => {
     playerTwoNewName.textContent = playerTwo.value;
     const modal = document.getElementById('modal');
     modal.classList.add('active');
+    Array.from(document.forms).forEach(form => {
+        form.reset()
+    })
 }
+
 const playAgain = () => {
     const gameBoard = document.getElementById('game-board');
     const modalBtn = document.getElementById('modal-btn');
@@ -114,46 +119,36 @@ const playAgain = () => {
             item.textContent = ""
     });
     winner = false;
-    xPlaying = false
+    xPlaying = false;
     boardItems = [];
-    modalBtn.classList.toggle('active')
+    modalBtn.classList.toggle('active');
 }
 
 const restartGame = () => {
-    const gameBoard = document.getElementById('game-board');
-    Array.from(gameBoard.children).forEach(item => {
-            item.textContent = ""
-    });
-    winner = false;
-    xPlaying = false
-    boardItems = [];
-    playerOnePoints = 0;
-    playerTwoPoints = 0;
-    const playerOne = document.getElementById('player-one-points');
-    const playerTwo = document.getElementById('player-two-points');
-    playerOne.textContent = playerOnePoints;
-    playerTwo.textContent = playerTwoPoints;
-    const modal = document.getElementById('modal');
-    modal.classList.remove('active');
+    location.reload()
 }
 
-newGame.addEventListener("click", setNewGame);
+const showResult = (str) => {
+    const result = document.getElementById('result');
+    result.textContent = str
+}
 
-document.addEventListener('click', (e) => {
+const playGame = (e) => {
     const div = document.querySelectorAll('.box');
-        Array.from(div).forEach(item => {
-            if(e.target === item && !winner) {
-                if(item.textContent !== "") return
-                if(item.textContent === "" && !xPlaying) {
-                    printMark(e, playerX)
-                    checkWinner(playerX)
-                } if(item.textContent === "" && xPlaying) {
-                    printMark(e, playerO)
-                    checkWinner(playerO)
-                }
+    Array.from(div).forEach(item => {
+        if(e.target === item && !winner) {
+            if(item.textContent !== "") return
+            if(item.textContent === "" && !xPlaying) {
+                printMark(e, playerX)
+                checkWinner(playerX)
+            } if(item.textContent === "" && xPlaying) {
+                printMark(e, playerO)
+                checkWinner(playerO)
             }
-        })
-})
-
+        }
+    })
+}
+newGame.addEventListener("click", setNewGame);
+document.addEventListener('click', playGame)
 playAgainBtn.addEventListener("click", playAgain)
 restartBtn.addEventListener('click', restartGame)
